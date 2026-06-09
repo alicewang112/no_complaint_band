@@ -107,10 +107,10 @@ function renderHands() {
     slot.classList.remove("drop-target");
   });
 
-  const x = state.currentHand === "left" ? "23%" : "77%";
+  const x = state.currentHand === "left" ? "18%" : "82%";
   els.bracelet.style.setProperty("--bracelet-x", x);
   els.bracelet.style.left = `var(--bracelet-x)`;
-  els.bracelet.style.top = "180px";
+  els.bracelet.style.top = "242px";
 }
 
 function renderHistory() {
