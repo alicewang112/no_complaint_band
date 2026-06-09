@@ -6,7 +6,6 @@ const DEFAULT_STATE = {
 };
 
 const state = loadState();
-let pendingHand = null;
 let dragOffset = { x: 0, y: 0 };
 
 const els = {
@@ -23,10 +22,6 @@ const els = {
   historyList: document.querySelector("#historyList"),
   handsSection: document.querySelector(".hands-section"),
   bracelet: document.querySelector("#bracelet"),
-  modal: document.querySelector("#confirmModal"),
-  cancelSwitch: document.querySelector("#cancelSwitch"),
-  confirmSwitch: document.querySelector("#confirmSwitch"),
-  historyToggle: document.querySelector("#historyToggle"),
 };
 
 function loadState() {
@@ -172,21 +167,9 @@ function markDropTarget(hand) {
   });
 }
 
-function openConfirm(hand) {
-  pendingHand = hand;
-  els.modal.classList.remove("hidden");
-  els.confirmSwitch.focus();
-}
-
-function closeConfirm() {
-  pendingHand = null;
-  els.modal.classList.add("hidden");
-  renderHands();
-}
-
-function commitSwitch() {
-  if (!pendingHand || pendingHand === state.currentHand) {
-    closeConfirm();
+function switchHand(nextHand) {
+  if (!nextHand || nextHand === state.currentHand) {
+    renderHands();
     return;
   }
 
@@ -197,13 +180,11 @@ function commitSwitch() {
     endTime,
     duration: Math.max(0, Math.floor((endTime - state.startTime) / 1000)),
     fromHand: state.currentHand,
-    toHand: pendingHand,
+    toHand: nextHand,
   });
-  state.currentHand = pendingHand;
+  state.currentHand = nextHand;
   state.startTime = endTime;
   saveState();
-  pendingHand = null;
-  els.modal.classList.add("hidden");
   renderAll();
 }
 
@@ -231,7 +212,7 @@ els.bracelet.addEventListener("pointerup", (event) => {
   markDropTarget(null);
 
   if (targetHand && targetHand !== state.currentHand) {
-    openConfirm(targetHand);
+    switchHand(targetHand);
   } else {
     renderHands();
   }
@@ -240,21 +221,7 @@ els.bracelet.addEventListener("pointerup", (event) => {
 els.bracelet.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" && event.key !== " ") return;
   event.preventDefault();
-  openConfirm(state.currentHand === "left" ? "right" : "left");
-});
-
-els.cancelSwitch.addEventListener("click", closeConfirm);
-els.confirmSwitch.addEventListener("click", commitSwitch);
-els.modal.addEventListener("click", (event) => {
-  if (event.target === els.modal) closeConfirm();
-});
-
-els.historyToggle.addEventListener("click", () => {
-  document.querySelector("#historyCard").scrollIntoView({ behavior: "smooth", block: "start" });
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !els.modal.classList.contains("hidden")) closeConfirm();
+  switchHand(state.currentHand === "left" ? "right" : "left");
 });
 
 renderAll();
