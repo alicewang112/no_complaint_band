@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>换手 - 不抱怨手环</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <header class="topbar">
+        <button class="icon-button" type="button" aria-label="菜单">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        <div class="brand" aria-label="换手">
+          <span>换手</span>
+          <span class="moon" aria-hidden="true"></span>
+        </div>
+        <button class="icon-button" id="historyToggle" type="button" aria-label="查看记录">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 18h16M6 15l4-4 3 3 5-7" />
+            <path d="M18 7h2v2" />
+          </svg>
+        </button>
+      </header>
+
+      <section class="timer-section" aria-label="当前连续不抱怨时长">
+        <p class="mantra">无抱怨 · 更觉察 · 更自由</p>
+        <div class="timer" id="timer">
+          <span><strong id="days">00</strong>天</span>
+          <span><strong id="hours">00</strong>小时</span>
+          <span><strong id="minutes">00</strong>分</span>
+          <span><strong id="seconds">00</strong>秒</span>
+        </div>
+        <p class="start-line" id="startLine">从现在开始</p>
+      </section>
+
+      <section class="hands-section" aria-label="换手操作">
+        <div class="hand-slot" data-hand="left">
+          <div class="hand-label">左手</div>
+          <div class="hand left-hand" aria-hidden="true">
+            <span class="finger finger-1"></span>
+            <span class="finger finger-2"></span>
+            <span class="finger finger-3"></span>
+            <span class="finger finger-4"></span>
+            <span class="palm"></span>
+            <span class="thumb"></span>
+            <span class="wrist-guide"></span>
+          </div>
+        </div>
+
+        <div class="drag-hint" aria-hidden="true">
+          <span>拖动手环</span>
+          <svg viewBox="0 0 120 28">
+            <path d="M9 14h102" />
+            <path d="m20 6-10 8 10 8M100 6l10 8-10 8" />
+          </svg>
+        </div>
+
+        <div class="hand-slot active" data-hand="right">
+          <div class="hand-label">右手</div>
+          <div class="hand right-hand" aria-hidden="true">
+            <span class="finger finger-1"></span>
+            <span class="finger finger-2"></span>
+            <span class="finger finger-3"></span>
+            <span class="finger finger-4"></span>
+            <span class="palm"></span>
+            <span class="thumb"></span>
+            <span class="wrist-guide"></span>
+          </div>
+        </div>
+
+        <button class="bracelet" id="bracelet" type="button" aria-label="拖动手环换到另一只手">
+          <span class="cord"></span>
+          <span class="bead"></span>
+          <span class="charm">换</span>
+          <span class="bead bead-small"></span>
+        </button>
+      </section>
+
+      <section class="stats-grid" aria-label="数据统计">
+        <article>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 3v4M17 3v4M4 9h16M5 5h14v15H5z" />
+          </svg>
+          <span>当前记录</span>
+          <strong id="currentStat">00秒</strong>
+        </article>
+        <article>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m5 20 3-11 4 5 4-8 3 14H5z" />
+            <path d="M8 9 5 5M16 6l3-3" />
+          </svg>
+          <span>最长记录</span>
+          <strong id="bestStat">00秒</strong>
+        </article>
+        <article>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17 3v5h-5M7 21v-5h5" />
+            <path d="M19 11a7 7 0 0 0-12-5M5 13a7 7 0 0 0 12 5" />
+          </svg>
+          <span>换手次数</span>
+          <strong id="switchStat">00次</strong>
+        </article>
+        <article>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19h16M6 16l4-5 3 3 5-8" />
+          </svg>
+          <span>平均记录</span>
+          <strong id="avgStat">00秒</strong>
+        </article>
+      </section>
+
+      <section class="history-card" id="historyCard" aria-label="历史记录">
+        <div class="section-title">
+          <h2>最近记录</h2>
+          <span id="totalStat">累计 00秒</span>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="modal">
+        <div class="alert-icon" aria-hidden="true">!</div>
+        <h2 id="confirmTitle">你觉察到了一次抱怨。</h2>
+        <p>准备重新开始吗？</p>
+        <div class="modal-actions">
+          <button class="secondary-button" id="cancelSwitch" type="button">取消</button>
+          <button class="primary-button" id="confirmSwitch" type="button">重新开始</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
