@@ -110,7 +110,7 @@ function renderHands() {
   const x = state.currentHand === "left" ? "18%" : "82%";
   els.bracelet.style.setProperty("--bracelet-x", x);
   els.bracelet.style.left = `var(--bracelet-x)`;
-  els.bracelet.style.top = "242px";
+  els.bracelet.style.top = "246px";
 }
 
 function renderHistory() {
