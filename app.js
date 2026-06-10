@@ -107,10 +107,16 @@ function renderHands() {
     slot.classList.remove("drop-target");
   });
 
-  const x = state.currentHand === "left" ? "18%" : "82%";
-  els.bracelet.style.setProperty("--bracelet-x", x);
-  els.bracelet.style.left = `var(--bracelet-x)`;
-  els.bracelet.style.top = "246px";
+  const activeSlot = document.querySelector(`.hand-slot[data-hand="${state.currentHand}"]`);
+  const wrist = activeSlot?.querySelector(".wrist");
+  if (!wrist) return;
+
+  const sectionRect = els.handsSection.getBoundingClientRect();
+  const wristRect = wrist.getBoundingClientRect();
+  const left = wristRect.left - sectionRect.left + wristRect.width / 2;
+  const top = wristRect.top - sectionRect.top + wristRect.height / 2 - els.bracelet.offsetHeight / 2;
+  els.bracelet.style.left = `${left}px`;
+  els.bracelet.style.top = `${top}px`;
 }
 
 function renderHistory() {
@@ -225,6 +231,7 @@ els.bracelet.addEventListener("keydown", (event) => {
 });
 
 renderAll();
+window.addEventListener("resize", renderHands);
 setInterval(() => {
   renderTimer();
   renderStats();
