@@ -22,6 +22,7 @@ const els = {
   historyList: document.querySelector("#historyList"),
   handsSection: document.querySelector(".hands-section"),
   bracelet: document.querySelector("#bracelet"),
+  clearData: document.querySelector("#clearData"),
 };
 
 function loadState() {
@@ -194,6 +195,16 @@ function switchHand(nextHand) {
   renderAll();
 }
 
+function clearData() {
+  const confirmed = window.confirm("确定要清空所有记录并重新开始吗？");
+  if (!confirmed) return;
+
+  state.startTime = Date.now();
+  state.history = [];
+  saveState();
+  renderAll();
+}
+
 els.bracelet.addEventListener("pointerdown", (event) => {
   els.bracelet.setPointerCapture(event.pointerId);
   const braceletRect = els.bracelet.getBoundingClientRect();
@@ -229,6 +240,8 @@ els.bracelet.addEventListener("keydown", (event) => {
   event.preventDefault();
   switchHand(state.currentHand === "left" ? "right" : "left");
 });
+
+els.clearData.addEventListener("click", clearData);
 
 renderAll();
 window.addEventListener("resize", renderHands);

@@ -408,6 +408,31 @@ button {
   text-align: center;
 }
 
+.footer-actions {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 6px;
+}
+
+.clear-button {
+  min-width: 118px;
+  min-height: 42px;
+  padding: 0 18px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid rgba(23, 45, 43, 0.18);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.clear-button:hover,
+.clear-button:focus-visible {
+  color: var(--coral-deep);
+  border-color: rgba(217, 78, 68, 0.42);
+  outline: 0;
+}
+
 @media (min-width: 760px) {
   .app {
     width: min(100%, 980px);
